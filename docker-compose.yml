@@ -1,0 +1,36 @@
+version: '2'
+services:
+  db:
+    image: mariadb:10.2
+    ports:
+      - "3306:3306"
+    container_name: tundra-db
+    environment:
+       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+       MYSQL_DATABASE: tundra
+    networks:
+      - tundra
+  redis:
+    image: redis:3.2.11
+    ports:
+      - "6379:6379"
+    container_name: tundra-redis
+    networks:
+      - tundra
+  web:
+    image: pshingavi/tundra
+    command: /bin/bash -c "cd /tundra && source /env/bin/activate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - /u/tundra:/tundra
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    container_name: tundra-web
+    networks:
+      - tundra
+networks:
+  tundra:
+    external:
+      name: topenguins

@@ -74,7 +74,7 @@ DATABASES = {
         'NAME': 'tundra',
         'USER': 'root',
         'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'HOST': 'db',
         'PORT': 3306,
     }
 }
@@ -127,7 +127,7 @@ SESSION_CACHE_ALIAS = 'default'
 CACHES = {
     'default': {
         'BACKEND': 'redis_cache.RedisCache',
-        'LOCATION': '127.0.0.1:6379',
+        'LOCATION': 'redis:6379',
         'TIMEOUT': 30 * 24 * 60 * 60,  # One month in seconds
         'OPTIONS': {
             'DB': 0,
